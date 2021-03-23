@@ -6,8 +6,7 @@
   "rules": {
     "align": {
       "options": [
-        "parameters",
-        "statements"
+        "parameters"
       ]
     },
     "array-type": false,
@@ -65,7 +64,7 @@
       "as-needed"
     ],
     "quotemark": [
-      true,
+      false,
       "single"
     ],
     "semicolon": {
@@ -147,6 +146,8 @@
       "element",
       "app",
       "kebab-case"
-    ]
+    ],
+    "no-trailing-whitespace": false,
+    "prefer-const": false
   }
 }

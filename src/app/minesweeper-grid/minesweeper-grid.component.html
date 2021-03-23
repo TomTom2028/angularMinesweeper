@@ -1,0 +1,15 @@
+<div class="grid">
+  <ng-template ngFor let-row [ngForOf]="board">
+    <div class="row">
+      <ng-template ngFor let-square [ngForOf]="row">
+        <app-square class="btn" [text]="square.displayValue" (click)="squareClicked(square)"
+                    (contextmenu)="squareRightClicked(square)"></app-square>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>
+
+
+<h1>Num of bombs left: {{bombsLeft}}</h1>
+
+
