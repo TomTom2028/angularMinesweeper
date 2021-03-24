@@ -2,14 +2,16 @@
   <ng-template ngFor let-row [ngForOf]="board">
     <div class="row">
       <ng-template ngFor let-square [ngForOf]="row">
-        <app-square class="btn" [status]="square.status" (click)="squareClicked(square)"
-                    (contextmenu)="squareRightClicked(square)"></app-square>
+        <app-square class="btn" [status]="square.status" (click)="allowInput ? squareClicked(square) : false"
+                    (contextmenu)="allowInput ? squareRightClicked(square) : false"></app-square>
       </ng-template>
     </div>
   </ng-template>
 </div>
 
-
 <h1>Num of bombs left: {{bombsLeft}}</h1>
+
+<h1>{{winLooseDisplayText}}</h1>
+
 
 

@@ -12,10 +12,13 @@ import {Square} from './square';
 export class MinesweeperGridComponent implements OnInit, OnChanges {
 
   board: Square[][];
-
-  boardWidth: number;
-  boardHeight: number;
   bombsLeft: number;
+
+  allowInput: boolean;
+
+
+  winLooseDisplayText: string;
+
 
   @Input() val: any;
 
@@ -61,12 +64,16 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.genBoard(this.val.x, this.val.y, this.val.numBombs);
+    this.allowInput = true;
+    this.winLooseDisplayText = "";
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.val.firstChange)
     {
       this.genBoard(changes.val.currentValue.x, changes.val.currentValue.y, changes.val.currentValue.numBombs);
+      this.allowInput = true;
+      this.winLooseDisplayText = "";
     }
 
   }
@@ -76,8 +83,13 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
     {
       // Valid operation, do now
       this.uncoverSquare(clickedSquare);
+      if (clickedSquare.status === Square.SquareStatus.BOMB)
+      {
+        this.doOnLose();
+      }
     }
   }
+
 
   private uncoverSquare(currentSquare: Square): void
   {
@@ -149,7 +161,6 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
   }
 
   squareRightClicked(clickedSquare): boolean {
-
     if (clickedSquare.status === Square.SquareStatus.FLAGGED)
     {
       clickedSquare.status = Square.SquareStatus.HIDDEN;
@@ -161,12 +172,74 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
       {
         clickedSquare.status = Square.SquareStatus.FLAGGED;
         this.bombsLeft --;
+
+        // here we can check if the player has won.
+
+        if (this.hasPlayerWon())
+        {
+          this.doOnWin();
+        }
+
       }
     }
 
     return false;
   }
 
+
+  private doOnWin(): void
+  {
+    this.allowInput = false;
+    this.winLooseDisplayText = "You have won! Congrats!";
+
+  }
+
+  private doOnLose(): void
+  {
+    this.allowInput = false;
+    this.winLooseDisplayText = "You lost...";
+
+    // now we uncover all the squares.
+
+    this.board.forEach((row) => {
+      row.forEach(square => {
+        this.uncoverSquare(square);
+      });
+    });
+
+  }
+
+
+  hasPlayerWon(): boolean
+  {
+    let numOfCorrectFlags = 0;
+
+    this.board.forEach((row) => {
+      row.forEach(square => {
+        if (square.hasBomb && square.status === Square.SquareStatus.FLAGGED)
+        {
+          numOfCorrectFlags++;
+        }
+      });
+    });
+
+// OLD
+/*    for (let i = 0; i < this.board.length; i++)
+    {
+      for (let j = 0; j < this.board[i].length; j++)
+      {
+        if (this.board[i][j].hasBomb && this.board[i][j].status === Square.SquareStatus.FLAGGED)
+        {
+          numOfCorrectFlags++;
+        }
+      }
+    }
+
+ */
+
+    return numOfCorrectFlags >= this.val.numBombs;
+
+  }
 
   printGrid(): void
   {

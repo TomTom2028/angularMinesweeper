@@ -1,0 +1,8 @@
+.headingWrapper{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.headingWrapper > form > button {
+  font-size: 150%;
+}
