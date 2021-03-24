@@ -1,1 +1,5 @@
-<button [ngStyle]="{color: textCol, 'background-color': bgCol}">{{btnText}}</button>
+<div mat-ripple [matRippleCentered]="true">
+  <button mat-stroked-button [disableRipple]="true" [ngStyle]="{color: textCol, 'background-color': bgCol}">
+      {{btnText}}
+  </button>
+</div>

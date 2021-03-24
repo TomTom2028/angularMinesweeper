@@ -1,8 +1,26 @@
-.headingWrapper{
-  margin-right: auto;
-  margin-left: auto;
+form{
+  display: flex;
+  flex-direction: column;
 }
 
-.headingWrapper > form > button {
-  font-size: 150%;
+form > button{
+  max-width: 15rem;
+
+}
+
+form > mat-radio-group{
+  display: flex;
+  flex-direction: column;
+
+}
+
+form > mat-radio-group > *{
+  margin-bottom: 0.5rem;
+
+}
+
+
+
+.headingWrapper{
+  margin: 1rem;
 }

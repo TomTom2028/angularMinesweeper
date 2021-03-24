@@ -18,7 +18,7 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
 
 
   winLooseDisplayText: string;
-
+  squareSize = 2;
 
   @Input() val: any;
 

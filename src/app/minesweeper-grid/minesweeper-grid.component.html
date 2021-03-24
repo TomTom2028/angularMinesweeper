@@ -1,17 +1,17 @@
-<div class="grid">
-  <ng-template ngFor let-row [ngForOf]="board">
-    <div class="row">
+<div class="listWrapper">
+  <mat-grid-list cols="{{board.length > 0 ? board[0].length : null}}" rowHeight="{{squareSize + 'rem'}}" [ngStyle]="{width: board.length + 'rem'}">
+    <ng-template ngFor let-row [ngForOf]="board">
       <ng-template ngFor let-square [ngForOf]="row">
-        <app-square class="btn" [status]="square.status" (click)="allowInput ? squareClicked(square) : false"
-                    (contextmenu)="allowInput ? squareRightClicked(square) : false"></app-square>
+        <mat-grid-tile>
+          <app-square class="btn" [status]="square.status" (click)="allowInput ? squareClicked(square) : false"
+                      (contextmenu)="allowInput ? squareRightClicked(square) : false"></app-square>
+        </mat-grid-tile>
       </ng-template>
-    </div>
-  </ng-template>
+    </ng-template>
+  </mat-grid-list>
+  <h1>Num of bombs left: {{bombsLeft}}</h1>
+  <h1>{{winLooseDisplayText}}</h1>
 </div>
-
-<h1>Num of bombs left: {{bombsLeft}}</h1>
-
-<h1>{{winLooseDisplayText}}</h1>
 
 
 

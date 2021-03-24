@@ -1,27 +1,20 @@
-<div class="headingWrapper">
-  <h1>Minesweeper</h1>
+<mat-toolbar color="primary">
+  <span>Minesweeper</span>
+</mat-toolbar>
 
+<div class="headingWrapper">
   <h2>Please input grid </h2>
 
   <form [formGroup]="difficultyForm" (ngSubmit)="onSubmit()">
-    <label>
-      <input type="radio" value="Easy" formControlName="difficulty">
-      <span>Easy (8x8 10 mines)</span>
-    </label>
-
-    <label>
-      <input type="radio" value="Medium" formControlName="difficulty">
-      <span>Medium (16x16 40 mines)</span>
-    </label>
-
-    <label>
-      <input type="radio" value="Hard" formControlName="difficulty">
-      <span>Hard (16x30 99 mines)</span>
-    </label>
-
-    <button class="button" type="submit">Start</button>
+    <mat-radio-group formControlName="difficulty">
+      <mat-radio-button value="Easy">Easy (8x8 10 mines)</mat-radio-button>
+      <mat-radio-button value="Medium">Medium (16x16 40 mines)</mat-radio-button>
+      <mat-radio-button value="Hard">Hard (16x30 99 mines)</mat-radio-button>
+    </mat-radio-group>
+    <button class="button" type="submit" mat-raised-button color="warn">Start</button>
 
   </form>
 </div>
-
 <app-minesweeper-grid [val]="grid"></app-minesweeper-grid>
+
+

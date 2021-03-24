@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   ) {}
 
   onSubmit(): void {
+    console.log(this.difficultyForm.value);
     switch (this.difficultyForm.value.difficulty)
     {
       case "Easy": this.grid = {x: 8, y: 8, numBombs: 10};
