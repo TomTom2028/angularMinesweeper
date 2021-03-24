@@ -31,7 +31,7 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
       tempArr[i] = new Array(x);
       for (let j = 0; j < tempArr[i].length; j++)
       {
-        tempArr[i][j] = new Square(i, j);
+        tempArr[i][j] = new Square(j , i); // x and y are reversed
       }
     }
 
@@ -72,21 +72,22 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
   }
 
   squareClicked(clickedSquare): void {
-    console.log("clok");
-    if (!clickedSquare.isUncovered && !clickedSquare.isFlagged)
+    if (clickedSquare.status === Square.SquareStatus.HIDDEN)
     {
       // Valid operation, do now
-      clickedSquare.setNumBombs(this.uncoverSquare(clickedSquare));
+      this.uncoverSquare(clickedSquare);
     }
   }
 
-  private uncoverSquare(currentSquare: Square, isFirstSquare: boolean = true): number
+  private uncoverSquare(currentSquare: Square): void
   {
-    if (isFirstSquare && currentSquare.hasBomb)
+    if (currentSquare.hasBomb)
     {
-      currentSquare.isUncovered = true;
-      return -1; // This means we have hit a bomb.
+      currentSquare.status = Square.SquareStatus.BOMB;
+      return;
     }
+
+
 
     // Search all squares arount this square, and see if it is a bomb.
     // First check and corrigate the search bounds.
@@ -108,8 +109,27 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
       }
     }
 
-    // First set the status of the current square
-    currentSquare.isUncovered = true;
+    // First we update the current square
+    let newStatus: any;
+    function sw(): any {
+      switch (numOfBombsNearby)
+      {
+        case 0: return Square.SquareStatus.EMPTY;
+        case 1: return Square.SquareStatus.NEARBY1;
+        case 2: return Square.SquareStatus.NEARBY2;
+        case 3: return Square.SquareStatus.NEARBY3;
+        case 4: return Square.SquareStatus.NEARBY4;
+        case 5: return Square.SquareStatus.NEARBY5;
+        case 6: return Square.SquareStatus.NEARBY6;
+        case 7: return Square.SquareStatus.NEARBY7;
+        case 8: return Square.SquareStatus.NEARBY8;
+      }
+      throw Error("Code fucked up, there can't be more than 8 bombs around");
+    }
+
+    currentSquare.status = sw();
+
+
 
 
     // If there are no bombs around, then we start with uncovering more squares.
@@ -119,44 +139,49 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
       {
         for (let j = minJ; j < maxJ + 1; j++)
         {
-          if (!this.board[i][j].isFlagged && !this.board[i][j].isUncovered)
+          if (this.board[i][j].status === Square.SquareStatus.HIDDEN)
           {
-            this.board[i][j].setNumBombs(this.uncoverSquare(this.board[i][j], false));
+            this.uncoverSquare(this.board[i][j]);
           }
         }
       }
     }
-
-    // Now return the number
-    return numOfBombsNearby;
-
   }
 
   squareRightClicked(clickedSquare): boolean {
-    if (!clickedSquare.isUncovered)
-    {
-      // Valid operation, do now
-      if (!clickedSquare.isFlagged)
-      {
-        if (this.bombsLeft > 0)
-        {
-          clickedSquare.isFlagged = true;
-          clickedSquare.displayValue = "F";
-          this.bombsLeft--;
-        }
-      }
-      else
-      {
-        clickedSquare.isFlagged = false;
-        clickedSquare.displayValue = "";
-        this.bombsLeft++;
-      }
 
+    if (clickedSquare.status === Square.SquareStatus.FLAGGED)
+    {
+      clickedSquare.status = Square.SquareStatus.HIDDEN;
+      this.bombsLeft++;
     }
+    else
+    {
+      if (clickedSquare.status === Square.SquareStatus.HIDDEN && this.bombsLeft > 0)
+      {
+        clickedSquare.status = Square.SquareStatus.FLAGGED;
+        this.bombsLeft --;
+      }
+    }
+
     return false;
   }
 
-  // TODO: write console print grid for debugging uncover alg
+
+  printGrid(): void
+  {
+    let outStr = "";
+    for (let i = 0; i < this.board.length; i++)
+    {
+      for (let j = 0; j < this.board[i].length; j++)
+      {
+        outStr += this.board[i][j].status.text + " ";
+      }
+      outStr += '\n';
+    }
+
+    console.log(outStr);
+  }
 
 
 }

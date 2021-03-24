@@ -2,7 +2,7 @@
   <ng-template ngFor let-row [ngForOf]="board">
     <div class="row">
       <ng-template ngFor let-square [ngForOf]="row">
-        <app-square class="btn" [text]="square.displayValue" (click)="squareClicked(square)"
+        <app-square class="btn" [status]="square.status" (click)="squareClicked(square)"
                     (contextmenu)="squareRightClicked(square)"></app-square>
       </ng-template>
     </div>

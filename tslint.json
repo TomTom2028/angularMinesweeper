@@ -148,6 +148,7 @@
       "kebab-case"
     ],
     "no-trailing-whitespace": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "prefer-for-of": false
   }
 }

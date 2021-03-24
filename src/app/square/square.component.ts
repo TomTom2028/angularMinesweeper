@@ -8,8 +8,10 @@ import {Subject} from 'rxjs';
 })
 export class SquareComponent implements OnInit, OnChanges {
 
-  @Input() text: string;
+  @Input() status: any;
   btnText: string;
+  textCol: string;
+  bgCol: string;
 
   constructor() {
 
@@ -17,14 +19,18 @@ export class SquareComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    this.btnText = this.text;
-
+    this.btnText = this.status.text;
+    this.textCol = this.status.textCol;
+    this.bgCol = this.status.bgCol;
   }
+  // https://www.sporcle.com/games/patrickstar92/minesweeper_colors/results
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.text.firstChange)
+    if (!changes.status.firstChange)
     {
-      this.btnText = changes.text.currentValue;
+      this.btnText = changes.status.currentValue.text;
+      this.textCol = changes.status.currentValue.textCol;
+      this.bgCol = changes.status.currentValue.bgCol;
     }
 
   }
