@@ -1,5 +1,16 @@
-<div mat-ripple [matRippleCentered]="true">
-  <button mat-stroked-button [disableRipple]="true" [ngStyle]="{color: textCol, 'background-color': bgCol}">
-      {{btnText}}
-  </button>
+<div class="container">
+  <div class="dummy"></div>
+  <div class="elem-wrapper" style="outline: 1px solid currentColor">
+    <div class="elem" mat-ripple [matRippleCentered]="true">
+
+      <div class="btn-div" [ngStyle]="{'background-color': bgCol}">
+        <svg viewBox="0 0 20 20">
+          <g transform="translate(10,10)">
+            <text [ngStyle]="{'fill': textCol}" text-anchor="middle" dominant-baseline="central">{{btnText}}</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
 </div>
+

@@ -19,8 +19,11 @@ form > mat-radio-group > *{
 
 }
 
-
-
 .headingWrapper{
   margin: 1rem;
+}
+
+
+mat-toolbar{
+  min-height: 50px
 }

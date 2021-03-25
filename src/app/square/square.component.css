@@ -1,4 +1,22 @@
-button {
+.container{
+  display: inline-block;
+  position: relative;
+}
+
+.dummy {
+  margin-top: 100%;
+}
+
+.elem-wrapper{
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.button {
   display: block;
   margin: 0;
   padding: 0;
@@ -8,8 +26,7 @@ button {
   min-height: 0;
 }
 
-div {
+div{
   width: 100%;
   height: 100%;
-  display: inline-block;
 }

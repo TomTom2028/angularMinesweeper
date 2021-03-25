@@ -35,4 +35,5 @@ export class SquareComponent implements OnInit, OnChanges {
 
   }
 
+
 }
