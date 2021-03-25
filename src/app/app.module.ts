@@ -14,12 +14,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatRippleModule} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { ModalWinLoseComponent } from './modal-win-lose/modal-win-lose.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MinesweeperGridComponent,
-    SquareComponent
+    SquareComponent,
+    ModalWinLoseComponent
   ],
   imports: [
     BrowserModule,

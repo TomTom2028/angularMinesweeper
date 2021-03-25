@@ -1,5 +1,6 @@
-import {ChangeDetectorRef, Component, Injectable, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Square} from './square';
+import {GameState} from './game-state-enum';
 
 @Component({
   selector: 'app-minesweeper-grid',
@@ -21,6 +22,8 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
   squareSize = 2;
 
   @Input() val: any;
+
+  @Output() gameConcludedEvent = new EventEmitter<GameState>();
 
   constructor() {
   }
@@ -161,6 +164,10 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
   }
 
   squareRightClicked(clickedSquare): boolean {
+    if (!this.allowInput) {
+      return false;
+    }
+
     if (clickedSquare.status === Square.SquareStatus.FLAGGED)
     {
       clickedSquare.status = Square.SquareStatus.HIDDEN;
@@ -191,6 +198,7 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
   {
     this.allowInput = false;
     this.winLooseDisplayText = "You have won! Congrats!";
+    this.gameConcludedEvent.emit(GameState.WIN);
 
   }
 
@@ -206,6 +214,8 @@ export class MinesweeperGridComponent implements OnInit, OnChanges {
         this.uncoverSquare(square);
       });
     });
+
+    this.gameConcludedEvent.emit(GameState.LOSE);
 
   }
 

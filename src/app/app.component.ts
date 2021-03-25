@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import {GameState} from './minesweeper-grid/game-state-enum';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,9 @@ export class AppComponent implements OnInit{
   });
 
   grid = {x: 0, y: 0, numBombs: 0};
+
+  gameState: GameState = null;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,10 +36,9 @@ export class AppComponent implements OnInit{
     }
   }
 
-
-
   ngOnInit(): void {
 
   }
+
 }
 

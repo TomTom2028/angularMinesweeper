@@ -14,6 +14,8 @@
 
   </form>
 </div>
-<app-minesweeper-grid [val]="grid"></app-minesweeper-grid>
+<app-minesweeper-grid (gameConcludedEvent)="this.gameState = $event" [val]="grid"></app-minesweeper-grid>
+
+<app-modal-win-lose *ngIf="gameState !== null" [gameState]="gameState" (onClose)="this.gameState = null;"></app-modal-win-lose>
 
 
